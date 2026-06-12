@@ -1,6 +1,5 @@
 import machine
 import vfs
-import time
 import sdcard
 
 
