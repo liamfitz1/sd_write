@@ -25,8 +25,9 @@ class SDManager:
         self.cs = machine.Pin(cs, machine.Pin.OUT)
         self.sd_card = None
         self.vfs = None
-        self.mount_point = "/new"
+        self.mount_point = "/mnt"
         self.is_mounted = False
+        self.outfile = "outfile.txt"
 
     def mount_sd(self):
         if not self.is_mounted:
@@ -57,7 +58,7 @@ class SDManager:
             print("Card is not mounted.")
             return
 
-        filename = f"{self.mount_point}/outfile.txt"
+        filename = f"{self.mount_point}/{self.outfile}"
 
         try:
             with open(filename, "a") as f:
@@ -66,3 +67,17 @@ class SDManager:
             print(f"Error writing file: {e}")
         else:
             print("Wrote data.")
+
+    def read_sd(self):
+        if not self.is_mounted:
+            print("Card is not mounted.")
+
+        filename = f"{self.mount_point}/{self.outfile}"
+
+        try:
+            with open(filename, "r") as f:
+                print(f.read())
+        except Exception as e:
+            print(f"Error reading file: {e}")
+        else:
+            print("Read data.")
